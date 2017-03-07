@@ -1,67 +1,47 @@
 package fr.usmb.farnier.temperapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    ListView mListView;
+    String[] rooms = new String[]{
+            "Chambre 001", "Chambre 002"
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mListView = (ListView) findViewById(R.id.lv_room);
 
-        final Button button = (Button) findViewById(R.id.btn_get);
-        final TextView tv = (TextView) findViewById(R.id.tv_get);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                tv.setText(/*getRequest()*/"Coucou");
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                android.R.layout.simple_list_item_1, rooms);
+        mListView.setAdapter(adapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int position, long id) {
+
+
+                String item = (String) ((TextView)view).getText();
+
+                Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
             }
+
+
         });
-    }
 
-    private String getRequest() {
-        String output = "";
-        try {
+    }}
 
-            URL url = new URL("http://localhost:8080/RESTfulExample/json/product/get");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
 
-            if (conn.getResponseCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
+            /**/
 
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
-
-        } catch (MalformedURLException e) {
-
-            e.printStackTrace();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-        return output;
-    }
-}

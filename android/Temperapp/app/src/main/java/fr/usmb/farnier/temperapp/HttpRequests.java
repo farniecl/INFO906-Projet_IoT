@@ -76,11 +76,15 @@ public class HttpRequests {
 
         String output;
         System.out.println("Output from Server .... \n");
-        while ((output = br.readLine()) != null) {
-            System.out.println(output);
+        try {
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-            con.disconnect();
+        con.disconnect();
     }
 
     public void HttpPostRequest() {
