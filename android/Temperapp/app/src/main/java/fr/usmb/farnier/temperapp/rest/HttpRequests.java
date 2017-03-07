@@ -80,8 +80,7 @@ public class HttpRequests implements IHttpRequest {
             while ((line = aBr.readLine()) != null) {
                 sb.append(line);
             }
-            JSONObject json = new JSONObject(sb.toString());
-            return json;
+            return new JSONObject(sb.toString());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
@@ -108,7 +107,9 @@ public class HttpRequests implements IHttpRequest {
         checkHttpURLConnectionException(con);
         JSONObject json = bufferedReaderToJsonObject(getBufferedReader(con));
         checkJsonObject(json);
-        con.disconnect();
+        if (con != null) {
+            con.disconnect();
+        }
         return json;
     }
 
@@ -117,16 +118,20 @@ public class HttpRequests implements IHttpRequest {
         HttpURLConnection con = getHttpURLConnection(aUrl, "Content-Type", HTTP_CODE_POST);
         checkHttpURLConnectionException(con);
         try {
-            OutputStream os = con.getOutputStream();
-            os.write(aInput.getBytes());
-            os.flush();
+            if (con != null) {
+                OutputStream os = con.getOutputStream();
+                os.write(aInput.getBytes());
+                os.flush();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         checkHttpURLConnectionException(con);
         JSONObject json = bufferedReaderToJsonObject(getBufferedReader(con));
         checkJsonObject(json);
-        con.disconnect();
+        if (con != null) {
+            con.disconnect();
+        }
         return json;
     }
 }
