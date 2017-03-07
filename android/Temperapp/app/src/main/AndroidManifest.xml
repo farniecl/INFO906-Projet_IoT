@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="room_displayActivity"
+            android:name=".RoomActivity"
             android:label="labellisation" />
     </application>
 

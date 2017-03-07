@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class room_displayActivity  extends Activity {
+public class RoomActivity extends Activity {
 
 
     final String ROOM_NAME = "nom_chambre";

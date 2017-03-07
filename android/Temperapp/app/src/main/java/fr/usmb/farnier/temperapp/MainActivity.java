@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(), room_name, Toast.LENGTH_LONG).show();
 
                 //passage à l'activite suivante
-                Intent intent = new Intent(MainActivity.this, room_displayActivity.class);
+                Intent intent = new Intent(MainActivity.this, RoomActivity.class);
                 intent.putExtra(ROOM_NAME,room_name);
                 startActivity(intent);
             }
