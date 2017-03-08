@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
 
-    final String ROOM_NAME = "nom_chambre";
+    final String ROOM_NUMBER = "Chambre 000";
     ListView mListView;
     String[] rooms = new String[]{
             "Chambre 001", "Chambre 002"
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //passage à l'activite suivante
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
-                intent.putExtra(ROOM_NAME,room_name);
+                intent.putExtra(ROOM_NUMBER,room_name);
                 startActivity(intent);
             }
 

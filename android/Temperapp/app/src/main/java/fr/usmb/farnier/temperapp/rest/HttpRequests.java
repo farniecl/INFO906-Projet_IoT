@@ -14,7 +14,7 @@ import java.net.URL;
  * Created by clement on 03/03/17.
  */
 
-public class HttpRequests implements IHttpRequest {
+public class HttpRequests implements IHttpRequests {
 
     final static private String HTTP_CODE_GET = "GET";
     final static private String HTTP_CODE_POST = "POST";
