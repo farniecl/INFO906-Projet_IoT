@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var FlowerPower =require ('flower-power-ble');
+var FlowerPower =require ('flower-power');
 var async = require('async');
 var hasCalibratedData = false;
 
@@ -10,15 +10,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-  FlowerPower.discoverAll(function (flowerPower) {
+  FlowerPower.discover(function (flowerPower) {
     console.log('readSystemId');
-     flowerPower.readSystemId(function(error, systemId) {
-       if (error) res.json({'error' :'error'});
-       async.series([
+    async.series([
     function(callback) {
       flowerPower.on('disconnect', function() {
         console.log('disconnected!');
-        process.exit(0);
+        res.end();
       });
 
       flowerPower.on('sunlightChange', function(sunlight) {
@@ -252,10 +250,6 @@ router.get('/test', function(req, res, next) {
       flowerPower.disconnect(callback);
     }
   ]);
-      //  console.log('\tsystem id = ' + systemId);
-      //  res.json({'id':systemId})
-
-     });
   })
 });
 
