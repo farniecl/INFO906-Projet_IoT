@@ -2,6 +2,7 @@ package fr.usmb.farnier.temperapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mListView = (ListView) findViewById(R.id.lv_room);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
