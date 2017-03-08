@@ -4,10 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var flower = require('./manageFlower/manageFlower')
 var index = require('./routes/index');
-var rooms = require('./routes/rooms');
+var rooms = require('./routes/room');
 
+flower.flowerHandler()
 var app = express();
 
 // view engine setup

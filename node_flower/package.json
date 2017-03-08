@@ -9,13 +9,16 @@
     "async": "^2.1.5",
     "body-parser": "~1.16.0",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.1",
     "debug": "~2.6.0",
     "express": "^4.15.2",
     "flower-power": "^0.3.0",
+    "mongoose": "^4.8.6",
     "morgan": "~1.7.0",
     "noble": "^1.8.0",
     "node-gyp": "^3.5.0",
     "pug": "~2.0.0-beta10",
-    "serve-favicon": "~2.3.2"
+    "serve-favicon": "~2.3.2",
+    "synchronize": "^2.0.0"
   }
 }

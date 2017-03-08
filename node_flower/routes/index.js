@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/test', function(req, res, next) {
-  FlowerPower.discover(function (flowerPower) {
+  FlowerPower.discoverAll(function (flowerPower) {
     console.log('readSystemId');
     async.series([
     function(callback) {
@@ -252,5 +252,36 @@ router.get('/test', function(req, res, next) {
   ]);
   })
 });
+
+router.get('/test2',function (req,res,next) {
+  FlowerPower.discover(function (flowerPower) {
+      async.series([
+        function (callback) {
+          flowerPower.on('disconnected')
+          flowerPower.on('disconnect', function() {
+            console.log('disconnected!');
+            res.end();
+          });
+
+         flowerPower.on('airChange', function(airChange) {
+            console.log('air  = ' + airChange.toFixed(2) + '°C');
+          });
+
+          /*flowerPower.on('calibratedAirChange', function(airChange) {
+            console.log('calibrated air  = ' + airChange.toFixed(2) + '°C');
+         });*/
+
+          console.log('connectAndSetup');
+          flowerPower.connectAndSetup(callback);
+        },
+        function (callback) {
+          flowerPower.disconnect(callback);
+        },
+        function (callback) {
+          callback()
+        }
+      ])
+  })
+})
 
 module.exports = router;
