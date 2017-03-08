@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // toast (notif de bas de page
                 String room_name = (String) ((TextView)view).getText();
-                Toast.makeText(getBaseContext(), room_name, Toast.LENGTH_LONG).show();
+
 
                 //passage à l'activite suivante
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);

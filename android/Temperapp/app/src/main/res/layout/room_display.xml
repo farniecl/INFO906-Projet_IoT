@@ -50,7 +50,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:max="40"
+        android:max="300"
         android:progress="1"
         android:layout_below="@+id/tv_tempintdescription"
         android:layout_alignEnd="@+id/tv_tempext" />
