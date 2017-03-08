@@ -8,70 +8,71 @@
         android:id="@+id/tv_roomname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tv_tempexdescription"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="23dp"
-        android:layout_marginTop="44dp"
-        android:text="chambre X" />
-
-    <TextView
-        android:id="@+id/tv_tempexdescription"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="109dp"
-        android:layout_weight="0.12"
-        android:text="Temperature extérieure :"
+        android:layout_marginStart="16dp"
+        android:text="Chambre 000"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
     <TextView
-        android:id="@+id/tv_tempintdescription"
-        android:layout_width="160dp"
+        android:id="@+id/tv_hour"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_below="@+id/tv_roomname"
+        android:layout_centerHorizontal="true"
+        android:text="00:00"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/tv_tempexdescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_weight="0.12"
-        android:text="Temperature intérieure :"
-        android:layout_below="@+id/tv_tempexdescription"
-        android:layout_alignStart="@+id/tv_tempexdescription" />
+        android:text="T° ext. : "
+        android:textAlignment="center"
+        android:layout_alignBaseline="@+id/tv_tempext"
+        android:layout_alignBottom="@+id/tv_tempext"
+        android:layout_alignStart="@+id/tv_roomname" />
 
     <TextView
         android:id="@+id/tv_tempext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_tempexdescription"
-        android:layout_alignBottom="@+id/tv_tempexdescription"
-        android:layout_alignStart="@+id/tv_tempint"
-        android:text="x °" />
-
-    <SeekBar
-        android:id="@+id/sb_temp"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:max="40"
-        android:progress="1"
-        android:layout_below="@+id/tv_tempintdescription"
-        android:layout_alignEnd="@+id/tv_tempext" />
+        android:text="00.0°C"
+        android:textSize="24sp"
+        android:layout_below="@+id/tv_hour"
+        android:layout_toEndOf="@+id/tv_tempexdescription" />
 
     <TextView
         android:id="@+id/tv_tempint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/sb_temp"
-        android:layout_marginStart="63dp"
-        android:layout_toEndOf="@+id/tv_tempintdescription"
-        android:text="X °" />
+        android:layout_marginTop="23dp"
+        android:text="00.0°C"
+        android:textSize="24sp"
+        android:layout_below="@+id/tv_tempext"
+        android:layout_toEndOf="@+id/tv_tempintdescription" />
 
     <TextView
-        android:id="@+id/tv_date"
+        android:id="@+id/tv_tempintdescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
-        android:layout_toEndOf="@+id/tv_tempext"
-        android:text="Date" />
+        android:layout_weight="0.12"
+        android:text="T° int.  : "
+        android:layout_alignBaseline="@+id/tv_tempint"
+        android:layout_alignBottom="@+id/tv_tempint"
+        android:layout_toStartOf="@+id/tv_tempext" />
+
+    <SeekBar
+        android:id="@+id/sb_temp"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:max="300"
+        android:progress="1"
+        android:layout_below="@+id/tv_tempint"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/tv_fences"
@@ -80,27 +81,27 @@
         android:layout_alignStart="@+id/tv_roomname"
         android:layout_below="@+id/sb_temp"
         android:layout_marginTop="37dp"
-        android:text="Volets :" />
-
-    <TextView
-        android:id="@+id/tv_windows"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:text="Fenêtre :"
-        android:layout_below="@+id/tv_fences"
-        android:layout_alignEnd="@+id/tv_fences" />
+        android:text="Ouverture / Fermeture des volets" />
 
     <Switch
         android:id="@+id/sw_fences"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tv_fences"
-        android:layout_toEndOf="@+id/tv_roomname"
-        android:layout_marginStart="24dp" />
+        android:layout_marginEnd="11dp"
+        android:layout_alignBaseline="@+id/tv_fences"
+        android:layout_alignBottom="@+id/tv_fences"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/tv_windows"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tv_fences"
+        android:layout_centerVertical="true"
+        android:text="Ouverture / Fermeture des fenêtres" />
 
     <Switch
-        android:id="@+id/sw_window"
+        android:id="@+id/sw_windows"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tv_windows"
@@ -110,9 +111,9 @@
         android:id="@+id/bt_validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sw_window"
-        android:layout_marginTop="37dp"
-        android:layout_toEndOf="@+id/tv_windows"
-        android:text="Valider" />
+        android:text="Valider"
+        android:layout_below="@+id/tv_windows"
+        android:layout_alignStart="@+id/tv_hour"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

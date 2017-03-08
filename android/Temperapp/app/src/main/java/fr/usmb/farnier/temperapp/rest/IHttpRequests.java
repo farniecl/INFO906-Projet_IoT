@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Created by clement on 07/03/17.
  */
 
-public interface IHttpRequest {
+public interface IHttpRequests {
     /**
      *
      * @param aUrl Request url

@@ -2,6 +2,7 @@ package fr.usmb.farnier.temperapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
 
-    final String ROOM_NAME = "nom_chambre";
+    final String ROOM_NUMBER = "Chambre 000";
     ListView mListView;
     String[] rooms = new String[]{
             "Chambre 001", "Chambre 002"
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mListView = (ListView) findViewById(R.id.lv_room);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
@@ -36,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
                 // toast (notif de bas de page
                 String room_name = (String) ((TextView)view).getText();
-                Toast.makeText(getBaseContext(), room_name, Toast.LENGTH_LONG).show();
+
 
                 //passage à l'activite suivante
                 Intent intent = new Intent(MainActivity.this, RoomActivity.class);
-                intent.putExtra(ROOM_NAME,room_name);
+                intent.putExtra(ROOM_NUMBER,room_name);
                 startActivity(intent);
             }
 
