@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
             "Chambre 001", "Chambre 002"
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

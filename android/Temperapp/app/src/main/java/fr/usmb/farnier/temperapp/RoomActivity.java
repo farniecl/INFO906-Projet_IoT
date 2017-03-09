@@ -45,8 +45,8 @@ public class RoomActivity extends Activity {
 
         final TextView tv_room = (TextView) findViewById(R.id.tv_roomname);
         final TextView tv_hour = (TextView) findViewById(R.id.tv_hour);
-        final TextView tv_tempext = (TextView) findViewById(R.id.tv_tempext);
         final TextView tv_tempint = (TextView) findViewById(R.id.tv_tempint);
+        final TextView tv_temptherm= (TextView) findViewById(R.id.tv_therm);
         final SeekBar sb_temp = (SeekBar) findViewById(R.id.sb_temp);
         final Switch sw_fences = (Switch) findViewById(R.id.sw_fences);
         final Switch sw_windows = (Switch) findViewById(R.id.sw_windows);
@@ -67,11 +67,12 @@ public class RoomActivity extends Activity {
         IHttpRequests hr = new HttpRequests();
         JSONObject json = hr.HttpGetRequest("http://192.168.43.197:3000/room/" + room_number);
         try {
-            tv_tempext.setText(json.getString("out_temp") + "°C");
+            tv_temptherm.setText(json.getString("out_temp") + "°C");
+            int therm_temp = (int)((Double.valueOf(String.valueOf(json.getString("out_temp")))-16)*10);
+            sb_temp.setProgress(therm_temp);
             tv_tempint.setText(json.getString("in_temp") + "°C");
             Double doubleTemp = json.getDouble("in_temp") * 10;
             int_temp = json.getDouble("in_temp");
-            sb_temp.setProgress(doubleTemp.intValue());
             if (json.getBoolean("state_fences")) {
                 sw_fences.toggle();
                 sw_fences.setChecked(true);
@@ -88,16 +89,15 @@ public class RoomActivity extends Activity {
 
 
         // Get instance of Vibrator from current Context
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 400 milliseconds
-        long[] pattern = {0, 400, 200,400};
-
-
+        //long[] pattern = {0, 400, 200,400};
 
         // dialogue d'alerte dans laquelle se trouve la notification.
+/*
         AlertDialog alertDialog = new AlertDialog.Builder(RoomActivity.this).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setTitle("Suggestion");
+        alertDialog.setMessage(room_number);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -107,7 +107,7 @@ public class RoomActivity extends Activity {
         alertDialog.show();
 
         v.vibrate(pattern, -1);
-
+*/
 
         // Toast.makeText(getBaseContext(), hr.HttpGetRequest("http://192.168.43.197:3000/room/001").toString(), Toast.LENGTH_LONG).show();
         // Toast.makeText(getBaseContext(), "Changements confirmés", Toast.LENGTH_LONG).show();
@@ -117,7 +117,7 @@ public class RoomActivity extends Activity {
             @Override
             public void onProgressChanged(SeekBar sb_temp, int progress, boolean fromUser) {
                 int_temp = Double.valueOf(String.valueOf((progress/10)+16) + "." + String.valueOf(progress%10));
-                tv_tempint.setText(int_temp + "°C");
+                tv_temptherm.setText(int_temp + "°C");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
