@@ -1,6 +1,9 @@
 package fr.usmb.farnier.temperapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -81,6 +85,27 @@ public class RoomActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+        // Get instance of Vibrator from current Context
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        // Vibrate for 400 milliseconds
+        long[] pattern = {0, 400, 200,400};
+
+
+
+        // dialogue d'alerte dans laquelle se trouve la notification.
+        AlertDialog alertDialog = new AlertDialog.Builder(RoomActivity.this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+        v.vibrate(pattern, -1);
 
 
         // Toast.makeText(getBaseContext(), hr.HttpGetRequest("http://192.168.43.197:3000/room/001").toString(), Toast.LENGTH_LONG).show();

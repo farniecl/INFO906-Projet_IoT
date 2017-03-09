@@ -1,5 +1,6 @@
 package fr.usmb.farnier.temperapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_list_item_1, rooms);
         mListView.setAdapter(adapter);
+
 
         // Listener de la liste
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
