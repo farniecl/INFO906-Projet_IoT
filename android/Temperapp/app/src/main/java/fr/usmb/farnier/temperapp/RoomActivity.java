@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +24,7 @@ import fr.usmb.farnier.temperapp.rest.IHttpRequests;
 public class RoomActivity extends Activity {
 
 
-    private String room_number = "Chambre 000";
+    private String room_number = "000";
     private Double int_temp = 00.0;
     private Boolean state_fences = false;
     private Boolean state_windows = false;
@@ -46,9 +47,12 @@ public class RoomActivity extends Activity {
         final Switch sw_fences = (Switch) findViewById(R.id.sw_fences);
         final Switch sw_windows = (Switch) findViewById(R.id.sw_windows);
 
+        // Récupération des données de l'activité précédente
+        room_number = intent.getStringExtra("room_number");
+
         // Récupération du numéro de chambre
         if (intent != null) {
-            tv_room.setText(intent.getStringExtra(room_number));
+            tv_room.setText("Chambre " + room_number);
         }
 
         // Récupération de l'heure courante
@@ -57,14 +61,14 @@ public class RoomActivity extends Activity {
 
         // Récupération des données du serveur
         IHttpRequests hr = new HttpRequests();
-        JSONObject json = hr.HttpGetRequest("http://192.168.43.197:3000/room/001");
+        JSONObject json = hr.HttpGetRequest("http://192.168.43.197:3000/room/" + room_number);
         try {
             tv_tempext.setText(json.getString("out_temp") + "°C");
             tv_tempint.setText(json.getString("in_temp") + "°C");
             Double doubleTemp = json.getDouble("in_temp") * 10;
             int_temp = json.getDouble("in_temp");
             sb_temp.setProgress(doubleTemp.intValue());
-            if (!json.getBoolean("state_fences")) {
+            if (json.getBoolean("state_fences")) {
                 sw_fences.toggle();
                 sw_fences.setChecked(true);
             }
@@ -86,9 +90,8 @@ public class RoomActivity extends Activity {
         sb_temp.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
             public void onProgressChanged(SeekBar sb_temp, int progress, boolean fromUser) {
-                // TODO Auto-generated method stub
-                tv_tempint.setText(String.valueOf(String.valueOf(progress/10)) + "." +
-                        String.valueOf(progress%10) + "°C");
+                int_temp = Double.valueOf(String.valueOf(progress/10) + "." + String.valueOf(progress%10));
+                tv_tempint.setText(int_temp + "°C");
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
@@ -96,25 +99,19 @@ public class RoomActivity extends Activity {
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
+        // Listener du switch pour les volets
         sw_fences.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    state_fences = true;
-                } else {
-                    state_fences = false;
-                }
+                state_fences = isChecked;
             }
         });
 
+        // Listener du switch pour la fenêtre
         sw_windows.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    state_windows = true;
-                } else {
-                    state_windows = false;
-                }
+                state_windows = isChecked;
             }
         });
 
@@ -123,7 +120,21 @@ public class RoomActivity extends Activity {
         bt_validate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("in_temp", int_temp);
+                    json.put("state_fences", state_fences);
+                    json.put("state_windows", state_windows);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                IHttpRequests hr = new HttpRequests();
+                JSONObject result = hr.HttpPostRequest("http://192.168.43.197:3000/room/" + room_number, json.toString());
+                try {
+                    Toast.makeText(getBaseContext(), result.getString("result"), Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

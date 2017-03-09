@@ -81,7 +81,7 @@
         android:layout_alignStart="@+id/tv_roomname"
         android:layout_below="@+id/sb_temp"
         android:layout_marginTop="37dp"
-        android:text="Ouverture / Fermeture des volets" />
+        android:text="Volets ouverts" />
 
     <Switch
         android:id="@+id/sw_fences"
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/tv_fences"
         android:layout_centerVertical="true"
-        android:text="Ouverture / Fermeture des fenêtres" />
+        android:text="Fenêtres ouvertes" />
 
     <Switch
         android:id="@+id/sw_windows"
