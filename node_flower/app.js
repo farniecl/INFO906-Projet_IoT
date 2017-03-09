@@ -5,11 +5,12 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flower = require('./manageFlower/manageFlower')
-var index = require('./routes/index');
 var rooms = require('./routes/room');
-
-flower.flowerHandler()
+var mongoose = require('mongoose');
 var app = express();
+
+flower.flowerHandler();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,7 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
 app.use('/room', rooms);
 
 // catch 404 and forward to error handler

@@ -1,17 +1,21 @@
 var async = require('async');
 var sync = require('synchronize');
 var FlowerPower = require('flower-power');
-//var Room = require('../model/rooms');
+var setTemp = require('../model/rooms').setTemp;
+var capteurRoom ={
+  'a0:14:3d:00:00:7d:aa:b2':"001",
+  'a0:14:3d:00:00:7d:94:0a':"002"
+}
 
 exports.flowerHandler = function() {
       FlowerPower.discoverAll(function(flowerPower) {
+        var room;
         flowerPower.on('disconnect', function() {
           console.log('disconnected!');
         });
         flowerPower.on('airTemperatureChange', function(temperature) {
-          setTimeout(function () {
-            console.log('air temperature = ' + temperature.toFixed(2) + '°C');
-          }, 15000);
+            setTemp(room,temperature.toFixed(2))
+            console.log('air temperature = ' + temperature.toFixed(2) + '°C '+room);
         });
         sync(async,'series');
         async.series([
@@ -22,6 +26,11 @@ exports.flowerHandler = function() {
           function(callback) {
             console.log('readSystemId');
             flowerPower.readSystemId(function(error, systemId) {
+              if(error)
+              {
+                console.log(error);
+              }
+              room = capteurRoom[systemId];
               console.log('\tsystem id = ' + systemId);
               callback();
             });
@@ -38,13 +47,6 @@ exports.flowerHandler = function() {
             flowerPower.readFriendlyName(function(error, friendlyName) {
               console.log('\tfriendly name = ' + friendlyName);
                 callback()
-            });
-          },
-          function(callback) {
-            console.log('readAirTemperature');
-            flowerPower.readAirTemperature(function(error, temperature) {
-              console.log('air temperature = ' + temperature.toFixed(2) + '°C');
-              callback();
             });
           },
           function(callback) {

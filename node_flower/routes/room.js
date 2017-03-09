@@ -1,17 +1,24 @@
 var express = require('express');
+var getRoomById = require('../model/rooms').getRoomById;
 var router = express.Router();
 //var FlowerPower =require ('flower-power');
 var async = require('async');
 var hasCalibratedData = false;
 var cors = require('cors');
 
-router.get('/:num',cors(),function(req,res,next) {
-    res.json({'out_temp':23.00,'in_temp':39.90,'state_fences':false,'state_windows':false});
+router.get('/:id',cors(),function(req,res,next) {
+    var room = getRoomById(req.params.id, function (err, room) {
+      if (!err) {
+        res.json(room);
+      } else {
+        res.status(400).json(err);
+      }
+    });
 });
 
-router.post('/:num',cors(),function(req,res,next) {
+router.post('/:id',cors(),function(req,res,next) {
     console.log(req.body);
-    res.json({'ok':'ok'});
+    res.json({'result':'Envoi des données réussi !'});
 });
 
 module.exports = router;
