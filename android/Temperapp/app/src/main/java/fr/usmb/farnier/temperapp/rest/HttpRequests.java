@@ -116,7 +116,6 @@ public class HttpRequests implements IHttpRequests {
     @Override
     public JSONObject HttpPostRequest(String aUrl, String aInput) {
         HttpURLConnection con = getHttpURLConnection(aUrl, "Content-Type", HTTP_CODE_POST);
-        checkHttpURLConnectionException(con);
         try {
             if (con != null) {
                 OutputStream os = con.getOutputStream();
