@@ -116,7 +116,7 @@ public class RoomActivity extends Activity {
         sb_temp.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
             public void onProgressChanged(SeekBar sb_temp, int progress, boolean fromUser) {
-                int_temp = Double.valueOf(String.valueOf(progress/10) + "." + String.valueOf(progress%10));
+                int_temp = Double.valueOf(String.valueOf((progress/10)+16) + "." + String.valueOf(progress%10));
                 tv_tempint.setText(int_temp + "°C");
             }
             @Override
