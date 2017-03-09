@@ -1,6 +1,9 @@
 package fr.usmb.farnier.temperapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -11,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Vibrator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,10 +68,11 @@ public class RoomActivity extends Activity {
         JSONObject json = hr.HttpGetRequest("http://192.168.43.197:3000/room/" + room_number);
         try {
             tv_temptherm.setText(json.getString("out_temp") + "°C");
+            int therm_temp = (int)((Double.valueOf(String.valueOf(json.getString("out_temp")))-16)*10);
+            sb_temp.setProgress(therm_temp);
             tv_tempint.setText(json.getString("in_temp") + "°C");
             Double doubleTemp = json.getDouble("in_temp") * 10;
             int_temp = json.getDouble("in_temp");
-            sb_temp.setProgress(doubleTemp.intValue());
             if (json.getBoolean("state_fences")) {
                 sw_fences.toggle();
                 sw_fences.setChecked(true);
@@ -92,7 +97,7 @@ public class RoomActivity extends Activity {
 /*
         AlertDialog alertDialog = new AlertDialog.Builder(RoomActivity.this).create();
         alertDialog.setTitle("Suggestion");
-        alertDialog.setMessage("Aucune suggestion pour le moment");
+        alertDialog.setMessage(room_number);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

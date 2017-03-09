@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] rooms = new String[]{
             "Chambre 001", "Chambre 002"
     };
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
